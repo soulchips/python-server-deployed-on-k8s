@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ch-server
+  labels:
+    app: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: soulchips/simple-python-server
+        ports:
+        - containerPort: 9000
+          name: status
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 200m
+            memory: 200Mi
+        readinessProbe:
+          httpGet:
+            path: /
+            scheme: HTTP
+            port: status
+        volumeMounts:
+        - name: index
+          mountPath: /www
+      volumes:
+        - name: index
+          configMap:
+            name: index

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index
+  labels:
+    app: server
+data:
+  index.html: |
+    <!doctype html>
+    <html>
+      <head>
+        <title>CH Homework!</title>
+      </head>
+      <body>
+        <p>Hello ConversationHealth</p>
+      </body>
+    </html>
